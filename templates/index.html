@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancer Prediction App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d9e4ec);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        .btn {
+            grid-column: 1 / -1;
+            padding: 12px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #222;
+        }
+        .error {
+            margin-top: 20px;
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cancer Prediction</h1>
+        <form action="/predict" method="post">
+            <!-- Example feature inputs: replace with your actual features -->
+            <div>
+                <label for="mean_radius">Mean Radius</label>
+                <input type="number" step="any" name="mean_radius" required>
+            </div>
+            <div>
+                <label for="mean_texture">Mean Texture</label>
+                <input type="number" step="any" name="mean_texture" required>
+            </div>
+            <div>
+                <label for="mean_perimeter">Mean Perimeter</label>
+                <input type="number" step="any" name="mean_perimeter" required>
+            </div>
+            <div>
+                <label for="mean_area">Mean Area</label>
+                <input type="number" step="any" name="mean_area" required>
+            </div>
+            <div>
+                <label for="mean_smoothness">Mean Smoothness</label>
+                <input type="number" step="any" name="mean_smoothness" required>
+            </div>
+            <div>
+                <label for="mean_compactness">Mean Compactness</label>
+                <input type="number" step="any" name="mean_compactness" required>
+            </div>
+            <!-- Add more fields as needed for your model -->
+            
+            <button type="submit" class="btn">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
