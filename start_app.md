@@ -39,3 +39,10 @@ The application will bind to `0.0.0.0` and default to port `8000`. You can overr
 - **Advanced UI**: Modern, responsive design with medical-themed aesthetics.
 - **AI Diagnostics**: Predictive analysis based on mean radius, texture, perimeter, area, smoothness, and compactness.
 - **Robust Backend**: Fast and efficient API handling with detailed logging.
+## Production Deployment (Render)
+
+This application is ready for deployment on platforms like Render:
+
+1.  **Build Command**: `pip install -r requirements.txt`
+2.  **Start Command**: `uvicorn app:app --host 0.0.0.0 --port $PORT` (or use the provided `Procfile`)
+3.  **Port**: Render will automatically assign a port via the `PORT` environment variable. The application is configured to respect this.
