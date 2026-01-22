@@ -2,114 +2,252 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cancer Prediction App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OncoPredict | Advanced Cancer Diagnostic AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #f0f4f8, #d9e4ec);
+        :root {
+            --primary: #0ca678;
+            --primary-dark: #099268;
+            --primary-light: #c3fae8;
+            --bg-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        .container {
-            max-width: 700px;
-            margin: 50px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            padding: 30px;
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            line-height: 1.6;
         }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-            color: #555;
-        }
-        input[type="text"], input[type="number"] {
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: border-color 0.3s;
+            max-width: 900px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
         }
-        input[type="text"]:focus, input[type="number"]:focus {
-            border-color: #007BFF;
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), #20c997);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: -0.02em;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input {
+            padding: 1rem 1.2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        input:focus {
             outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
         }
+
+        .submit-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
         .btn {
-            grid-column: 1 / -1;
-            padding: 12px;
-            background: #007BFF;
-            color: #fff;
+            background: var(--primary);
+            color: white;
+            padding: 1.2rem 3.5rem;
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(12, 166, 120, 0.3);
         }
+
         .btn:hover {
-            background: #0056b3;
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(12, 166, 120, 0.4);
         }
-        .result {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            color: #222;
+
+        .btn:active {
+            transform: translateY(0);
         }
-        .error {
-            margin-top: 20px;
+
+        .prediction-result {
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: 16px;
             text-align: center;
-            color: red;
-            font-weight: bold;
+            animation: slideUp 0.5s ease-out;
+            border: 1px solid transparent;
+        }
+
+        .result-malignant {
+            background: #fff5f5;
+            border-color: #ffc9c9;
+            color: #c92a2a;
+        }
+
+        .result-benign {
+            background: #ebfbee;
+            border-color: #b2f2bb;
+            color: #2b8a3e;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-malignant .status-badge { background: #fa5252; color: white; }
+        .result-benign .status-badge { background: #40c057; color: white; }
+
+        .result-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .card { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Cancer Prediction</h1>
+    <div class="card">
+        <header>
+            <h1>OncoPredict AI</h1>
+            <p class="subtitle">Diagnostic Assistance System powered by Advanced Learning Models</p>
+        </header>
+
         <form action="/predict" method="post">
-            <!-- Example feature inputs: replace with your actual features -->
-            <div>
-                <label for="mean_radius">Mean Radius</label>
-                <input type="number" step="any" name="mean_radius" required>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="mean_radius">Mean Radius</label>
+                    <input type="number" step="any" id="mean_radius" name="mean_radius" required placeholder="14.2">
+                </div>
+                <div class="form-group">
+                    <label for="mean_texture">Mean Texture</label>
+                    <input type="number" step="any" id="mean_texture" name="mean_texture" required placeholder="20.5">
+                </div>
+                <div class="form-group">
+                    <label for="mean_perimeter">Mean Perimeter</label>
+                    <input type="number" step="any" id="mean_perimeter" name="mean_perimeter" required placeholder="95.3">
+                </div>
+                <div class="form-group">
+                    <label for="mean_area">Mean Area</label>
+                    <input type="number" step="any" id="mean_area" name="mean_area" required placeholder="600.0">
+                </div>
+                <div class="form-group">
+                    <label for="mean_smoothness">Mean Smoothness</label>
+                    <input type="number" step="any" id="mean_smoothness" name="mean_smoothness" required placeholder="0.09">
+                </div>
+                <div class="form-group">
+                    <label for="mean_compactness">Mean Compactness</label>
+                    <input type="number" step="any" id="mean_compactness" name="mean_compactness" required placeholder="0.1">
+                </div>
             </div>
-            <div>
-                <label for="mean_texture">Mean Texture</label>
-                <input type="number" step="any" name="mean_texture" required>
+
+            <div class="submit-area">
+                <button type="submit" class="btn">Analyze Metrics</button>
             </div>
-            <div>
-                <label for="mean_perimeter">Mean Perimeter</label>
-                <input type="number" step="any" name="mean_perimeter" required>
-            </div>
-            <div>
-                <label for="mean_area">Mean Area</label>
-                <input type="number" step="any" name="mean_area" required>
-            </div>
-            <div>
-                <label for="mean_smoothness">Mean Smoothness</label>
-                <input type="number" step="any" name="mean_smoothness" required>
-            </div>
-            <div>
-                <label for="mean_compactness">Mean Compactness</label>
-                <input type="number" step="any" name="mean_compactness" required>
-            </div>
-            <!-- Add more fields as needed for your model -->
-            
-            <button type="submit" class="btn">Predict</button>
         </form>
 
         {% if prediction_text %}
-        <div class="result">{{ prediction_text }}</div>
+        <div class="prediction-result {% if 'Malignant' in prediction_text %}result-malignant{% else %}result-benign{% endif %}">
+            <div class="status-badge">AI Synthesis Result</div>
+            <p class="result-text">{{ prediction_text }}</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">
+                This prediction is for research assistance and should be verified by a medical professional.
+            </p>
+        </div>
         {% endif %}
     </div>
 </body>
